@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -18,10 +19,10 @@ import java.util.Map;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        // Title label
+        //Title label
         Label title = new Label("Simple Calculator");
 
-        // Calculator Output TextField
+        //Calculator Output TextField
         TextField output = new TextField("0");
         output.getStyleClass().add("output-label");
         output.setEditable(false); // Prevent editing by user
@@ -34,6 +35,11 @@ public class HelloApplication extends Application {
         equationLabel.setEditable(false);
         equationLabel.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         equationLabel.setMaxWidth(Double.MAX_VALUE);
+
+        //EquationLog Dropdown
+        ComboBox equationLogDropdown = new ComboBox();
+        equationLogDropdown.setPromptText("Previous Equations");
+        equationLogDropdown.getStyleClass().add("equation-log-dropdown");
 
         //All buttons
         Button clearBtn = new Button("C");
@@ -55,7 +61,7 @@ public class HelloApplication extends Application {
         Button divideBtn = new Button("/");
         Button equalsBtn = new Button("=");
 
-        // Number Button Actions
+        //Number Button Actions
         Calculator calc = new Calculator();
         Map<Button, String> numberButtons = new HashMap<>();
         numberButtons.put(zeroBtn, "0");
@@ -75,11 +81,10 @@ public class HelloApplication extends Application {
                     calc.currentNumber += value;
                     output.setText(calc.getCurrentNumber());
                     equationLabel.setText(calc.getCurrentEquation());
-
                 })
         );
 
-        // Operator Button Actions
+        //Operator Button Actions
         Map<Button, String> operatorButtons = new HashMap<>();
         operatorButtons.put(addBtn, "+");
         operatorButtons.put(subtractBtn, "-");
@@ -96,18 +101,26 @@ public class HelloApplication extends Application {
                 })
         );
 
-        // Equals Button Action
+        //Equals Button Action
         equalsBtn.setOnAction(e -> {
             calc.allNumbers.add(calc.currentNumber);
             calc.currentNumber = "";
             calc.calculateAll();
             output.setText(calc.result);
+            equationLabel.setText(calc.getCurrentEquation() + " = " + calc.result);
+            calc.equationLog.add(equationLabel.getText());
+            System.out.println(calc.equationLog);
             System.out.println(calc.allNumbers);
             System.out.println(calc.allOperations);
-            equationLabel.setText(calc.getCurrentEquation());
+
+            calc.allNumbers.clear();
+            calc.allOperations.clear();
+            calc.currentNumber = calc.result;
+
+            equationLogDropdown.getItems().setAll(calc.equationLog);
         });
 
-        // Clear Button Action
+        //Clear Button Action
         clearBtn.setOnAction(e -> {
             calc.result = "NULL";
             calc.allOperations.clear();
@@ -135,12 +148,12 @@ public class HelloApplication extends Application {
         clearRow.setSpacing(10);
 
         VBox mainLayout = new VBox(20);
-        mainLayout.getChildren().addAll(title, output, equationLabel, clearRow, firstRow, secondRow, thirdRow, fourthRow);
+        mainLayout.getChildren().addAll(title, output, equationLabel, clearRow, firstRow, secondRow, thirdRow, fourthRow, equationLogDropdown);
 
-        //Scene handeling
+        //Scene handling
         Scene scene = new Scene(mainLayout, 350, 600);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
-        stage.setTitle("Simple Calculator");
+        stage.setTitle("Simple Java Calculator");
         stage.setScene(scene);
         stage.show();
     }

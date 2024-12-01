@@ -8,6 +8,7 @@ public class Calculator {
     public String currentNumber = "";
     public List<String> allNumbers = new ArrayList<String>();
     public List<String> allOperations = new ArrayList<String>();
+    public List<String> equationLog = new ArrayList<String>();
     public String result = "NULL";
     public String currentEquation = "";
 
@@ -16,14 +17,12 @@ public class Calculator {
     }
 
     public void undoLastAdded() {
-        // Ensure the equation is not empty
         if (!currentEquation.isEmpty()) {
             while (currentEquation.endsWith(" ")) {
                 currentEquation = currentEquation.substring(0, currentEquation.length() - 1);
             }
 
             char lastChar = currentEquation.charAt(currentEquation.length() - 1);
-
             currentEquation = currentEquation.substring(0, currentEquation.length() - 1);
 
             if (Character.isDigit(lastChar) || lastChar == '.') {
@@ -34,23 +33,17 @@ public class Calculator {
                 if (!allOperations.isEmpty()) {
                     allOperations.removeLast();
                 }
-
+                currentNumber = "";
                 if (!allNumbers.isEmpty()) {
-                    currentNumber = allNumbers.removeLast();
-                } else {
-                    currentNumber = "";
+                    currentNumber = allNumbers.getLast();
                 }
             }
-
-            if (currentNumber.isEmpty() && !allNumbers.isEmpty()) {
-                currentNumber = allNumbers.getLast();
-            }
-
             if (currentEquation.isEmpty()) {
                 resetCalculator();
             }
         }
     }
+
 
     private void resetCalculator() {
         currentEquation = "";
@@ -125,10 +118,15 @@ public class Calculator {
                             return;
                     }
                 }
-
-                result = Double.toString(tempResult);
+                int intTempResult = (int)tempResult;
+                if (intTempResult == tempResult) {
+                    result = Double.toString(tempResult).substring(0, Double.toString(tempResult).length() - 2);
+                } else {
+                    result = Double.toString(tempResult);
+                }
                 currentEquation += " = " + result;
                 System.out.println("Result: " + result);
+                System.out.println("Equation: " + currentEquation);
             } catch (Exception e) {
                 result = "#ERROR#";
                 System.out.println("Error: " + e.getMessage());
@@ -138,7 +136,7 @@ public class Calculator {
         }
     }
 
-    private boolean correctNumberAndOperationAmount() {
+    public boolean correctNumberAndOperationAmount() {
         allNumbers.removeIf(String::isEmpty);
 
         return allNumbers.size() == allOperations.size() + 1;
