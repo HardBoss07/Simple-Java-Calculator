@@ -11,6 +11,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HelloApplication extends Application {
     @Override
@@ -40,7 +42,62 @@ public class HelloApplication extends Application {
         Button divideBtn = new Button("/");
         Button equalsBtn = new Button("=");
 
-        //All button actions
+        // Number Button Actions
+        Calculator calc = new Calculator();
+        Map<Button, String> numberButtons = new HashMap<>();
+        numberButtons.put(zeroBtn, "0");
+        numberButtons.put(oneBtn, "1");
+        numberButtons.put(twoBtn, "2");
+        numberButtons.put(threeBtn, "3");
+        numberButtons.put(fourBtn, "4");
+        numberButtons.put(fiveBtn, "5");
+        numberButtons.put(sixBtn, "6");
+        numberButtons.put(sevenBtn, "7");
+        numberButtons.put(eightBtn, "8");
+        numberButtons.put(nineBtn, "9");
+        numberButtons.put(commaBtn, ".");
+
+        numberButtons.forEach((button, value) ->
+                button.setOnAction(e -> {
+                    calc.currentNumber += value;
+                    output.setText(calc.getCurrentNumber());
+                })
+        );
+
+        // Operator Button Actions
+        Map<Button, String> operatorButtons = new HashMap<>();
+        operatorButtons.put(addBtn, "+");
+        operatorButtons.put(subtractBtn, "-");
+        operatorButtons.put(multiplyBtn, "*");
+        operatorButtons.put(divideBtn, "/");
+
+        operatorButtons.forEach((button, operator) ->
+                button.setOnAction(e -> {
+                    calc.allNumbers.add(calc.currentNumber);
+                    calc.currentNumber = "";
+                    calc.allOperations.add(operator);
+                })
+        );
+
+// Equals Button Action
+        equalsBtn.setOnAction(e -> {
+            calc.allNumbers.add(calc.currentNumber);
+            calc.currentNumber = "";
+            calc.calculateAll();
+            output.setText(calc.result);
+            System.out.println(calc.allNumbers);
+            System.out.println(calc.allOperations);
+        });
+
+// Clear Button Action
+        clearBtn.setOnAction(e -> {
+            calc.result = "NULL";
+            calc.allOperations.clear();
+            calc.allNumbers.clear();
+            calc.currentNumber = "";
+            output.setText("0");
+        });
+
 
         //Layout
         HBox firstRow = new HBox(10, sevenBtn, eightBtn, nineBtn, divideBtn);
