@@ -47,7 +47,7 @@ public class HelloApplication extends Application {
         equationLogDropdown.getStyleClass().add("equation-log");
         equationLogDropdown.setPlaceholder(new Text("No equations yet"));
 
-        //All buttons
+        //All buttonsVBox
         Button clearBtn = new Button("C");
         Button deleteBtn = new Button("←");
         Button zeroBtn = new Button("0");
@@ -66,6 +66,7 @@ public class HelloApplication extends Application {
         Button multiplyBtn = new Button("*");
         Button divideBtn = new Button("/");
         Button equalsBtn = new Button("=");
+        Button negateBtn = new Button("±");
 
         //Button Styles
         clearBtn.getStyleClass().add("button-other");
@@ -86,6 +87,7 @@ public class HelloApplication extends Application {
         multiplyBtn.getStyleClass().add("button-operator");
         divideBtn.getStyleClass().add("button-operator");
         equalsBtn.getStyleClass().add("button-operator");
+        negateBtn.getStyleClass().add("button-other");
 
         //Number Button Actions
         Calculator calc = new Calculator();
@@ -122,27 +124,47 @@ public class HelloApplication extends Application {
         //Operator Button Actions
         Map<Button, String> operatorButtons = new HashMap<>();
         operatorButtons.put(addBtn, "+");
+        operatorButtons.put(subtractBtn, "-");
         operatorButtons.put(multiplyBtn, "*");
         operatorButtons.put(divideBtn, "/");
 
         operatorButtons.forEach((button, operator) ->
                 button.setOnAction(e -> {
-                    calc.allNumbers.add(calc.currentNumber);
-                    calc.currentNumber = "";
-                    calc.allOperations.add(operator);
+                    if (!calc.currentNumber.isEmpty()) {
+                        calc.allNumbers.add(calc.currentNumber);
+                        calc.currentNumber = "";
+                        calc.allOperations.add(operator);
+                    } else if (!calc.allOperations.isEmpty()) {
+                        calc.allOperations.set(calc.allOperations.size() - 1, operator);
+                    } else {
+                        calc.allOperations.add(operator);
+                    }
                     equationLabel.setText(calc.getCurrentEquation());
-
                 })
         );
-        subtractBtn.setOnAction(e -> {
-            if (calc.allNumbers.isEmpty() && calc.currentNumber.isEmpty()) {
-                calc.currentNumber += "-";
+        operatorButtons.forEach((button, operator) ->
+                button.setOnAction(e -> {
+                    if (!calc.currentNumber.isEmpty()) {
+                        calc.allNumbers.add(calc.currentNumber);
+                        calc.currentNumber = "";
+                        calc.allOperations.add(operator);
+                    } else if (!calc.allOperations.isEmpty()) {
+                        calc.allOperations.set(calc.allOperations.size() - 1, operator);
+                    } else {
+                        calc.allOperations.add(operator);
+                    }
+                    equationLabel.setText(calc.getCurrentEquation());
+                })
+        );
+
+        //Negate button
+        negateBtn.setOnAction(e -> {
+            if (calc.currentNumber.charAt(0) == '-') {
+                calc.currentNumber = calc.currentNumber.substring(1);
+            } else {
+                calc.currentNumber = "-" + calc.currentNumber;
             }
-            else {
-                calc.allNumbers.add(calc.currentNumber);
-                calc.currentNumber = "";
-                calc.allOperations.add("-");
-            }
+            output.setText(calc.getCurrentNumber());
             equationLabel.setText(calc.getCurrentEquation());
         });
 
@@ -223,12 +245,15 @@ public class HelloApplication extends Application {
         HBox thirdRow = new HBox(10, oneBtn, twoBtn, threeBtn, subtractBtn);
         HBox fourthRow = new HBox(10, commaBtn, zeroBtn, equalsBtn, addBtn);
 
-        HBox clearRow = new HBox();
-        clearRow.getChildren().addAll(clearBtn, deleteBtn);
-        clearRow.setSpacing(10);
+        HBox otherButtons = new HBox();
+        otherButtons.getChildren().addAll(clearBtn, deleteBtn, negateBtn);
+        otherButtons.setSpacing(10);
+
+        VBox buttonsVBox = new VBox(10);
+        buttonsVBox.getChildren().addAll(otherButtons, firstRow, secondRow, thirdRow, fourthRow);
 
         VBox mainLayout = new VBox(20);
-        mainLayout.getChildren().addAll(titleAndToggle, output, equationLabel, clearRow, firstRow, secondRow, thirdRow, fourthRow, equationLogDropdown);
+        mainLayout.getChildren().addAll(titleAndToggle, output, equationLabel, equationLogDropdown, buttonsVBox);
 
         //Scene handling
         Scene scene = new Scene(mainLayout, 350, 600);
