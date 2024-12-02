@@ -33,6 +33,7 @@
 /* Output label */
 .output-label {
     -fx-font-size: 20px;
+    -fx-text-fill: #fafafa;
     -fx-background-color: #222222; /* Very dark background */
     -fx-border-color: #555555;
     -fx-border-width: 2px;

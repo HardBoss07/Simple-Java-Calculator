@@ -23,11 +23,6 @@ import java.util.Objects;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-
-        //TODO change css to be more modern
-        //TODO make first number possible to be negative
-        //TODO make if i press comma with no number before it adds a zero: .25 -> 0.25
-
         //Title label
         Label title = new Label("Simple Calculator");
         title.getStyleClass().add("title-label");
@@ -105,7 +100,6 @@ public class HelloApplication extends Application {
         numberButtons.put(sevenBtn, "7");
         numberButtons.put(eightBtn, "8");
         numberButtons.put(nineBtn, "9");
-        numberButtons.put(commaBtn, ".");
 
         numberButtons.forEach((button, value) ->
                 button.setOnAction(e -> {
@@ -114,11 +108,20 @@ public class HelloApplication extends Application {
                     equationLabel.setText(calc.getCurrentEquation());
                 })
         );
+        commaBtn.setOnAction(e -> {
+            if (calc.currentNumber.isEmpty()) {
+                calc.currentNumber += "0.";
+            }
+            else {
+                calc.currentNumber += ".";
+            }
+            output.setText(calc.getCurrentNumber());
+            equationLabel.setText(calc.getCurrentEquation());
+        });
 
         //Operator Button Actions
         Map<Button, String> operatorButtons = new HashMap<>();
         operatorButtons.put(addBtn, "+");
-        operatorButtons.put(subtractBtn, "-");
         operatorButtons.put(multiplyBtn, "*");
         operatorButtons.put(divideBtn, "/");
 
@@ -131,6 +134,18 @@ public class HelloApplication extends Application {
 
                 })
         );
+
+        subtractBtn.setOnAction(e -> {
+            if (calc.allNumbers.isEmpty()) {
+                calc.currentNumber += "-";
+            }
+            else {
+                calc.allNumbers.add(calc.currentNumber);
+                calc.currentNumber = "";
+                calc.allOperations.add("-");
+            }
+            equationLabel.setText(calc.getCurrentEquation());
+        });
 
         //Equals Button Action
         equalsBtn.setOnAction(e -> {
@@ -172,8 +187,8 @@ public class HelloApplication extends Application {
         });
 
         // Theme Toggle Button (Top-right corner)
-        Image lightImage = new Image(getClass().getResource("/ch/bosshard/matteo/calculator/Icons/light-theme-icon.png").toExternalForm());
-        Image darkImage = new Image(getClass().getResource("/ch/bosshard/matteo/calculator/Icons/dark-theme-icon.png").toExternalForm());
+        Image lightImage = new Image(Objects.requireNonNull(getClass().getResource("/ch/bosshard/matteo/calculator/Icons/light-theme-icon.png")).toExternalForm());
+        Image darkImage = new Image(Objects.requireNonNull(getClass().getResource("/ch/bosshard/matteo/calculator/Icons/dark-theme-icon.png")).toExternalForm());
         ImageView lightImageView = new ImageView(lightImage);
         ImageView darkImageView = new ImageView(darkImage);
 
