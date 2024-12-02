@@ -6,7 +6,7 @@
 }
 
 /* Title label */
-.label {
+.title-label {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
     -fx-text-fill: #333;
@@ -47,7 +47,103 @@
 
 /* Equation Log Dropdown */
 .equation-log {
+    -fx-background-color: #c4c4c4;
+    -fx-font-size: 14px;
+    -fx-font-style: italic;
+    -fx-text-fill: #575757;
+    -fx-border-color: #575757;
+    -fx-border-width: 1px;
+    -fx-border-radius: 2px;
+}
 
+.equation-log .list-cell {
+    -fx-background-color: #c4c4c4;
+    -fx-font-size: 14px;
+    -fx-font-style: italic;
+    -fx-text-fill: #575757;
+    -fx-border-color: transparent transparent #6e6d6d transparent;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-radius: 2px;
+    -fx-padding: 5;
+}
+
+.equation-log:focused {
+    -fx-border-color: #575757;
+}
+
+.equation-log .list-cell:hover {
+    -fxbackground-color: #bfbfbf;
+}
+
+.equation-log .list-cell:filled:selected {
+    -fxbackground-color: #575757;
+    -fx-border-color: transparent;
+}
+
+.equation-log .placeholder {
+    -fx-background-color: #c4c4c4;
+    -fx-text-fill: #575757;
+    -fx-padding: 5;
+    -fx-alignment: center-left;
+}
+
+.equation-log .placeholder Text {
+    -fx-fill: #575757;
+    -fx-font-size: 14px;
+    -fx-font-style: italic;
+    -fx-text-alignment: left;
+    -fx-alignment: center-left;
+    -fx-translate-x: 0;
+}
+
+.equation-log .list-view {
+    -fx-background-color: #c4c4c4;
+    -fx-border-color: #6e6d6d;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 5;
+}
+
+/* Scroll bar styling */
+.scroll-bar {
+    -fx-background-color: #c4c4c4;
+    -fx-padding: 2px;
+    -fx-border-width: 0 0 0 1px;
+    -fx-border-color: transparent transparent transparent #6e6d6d;
+}
+
+.scroll-bar:vertical {
+    -fx-pref-width: 10px;
+}
+
+.scroll-bar:horizontal {
+    -fx-pref-width: 10px;
+}
+
+.scroll-bar .thumb {
+    -fxbackground-color: #757575;
+    -fx-background-radius: 5px;
+    -fx-pref-height: 20px;
+    -fx-pref-width: 20px;
+    -fx-opacity: 0.8;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #575757;
+    -fx-opacity: 1.0;
+}
+
+.scroll-bar .track {
+    -fx-background-color: #e0e0e0;
+    -fx-background-radius: 5px;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-shape: "";
+    -fx-max-height: 0;
+    -fx-max-width: 0;
 }
 
 /* Button styling */
@@ -66,4 +162,19 @@
 
 .button:pressed {
     -fx-background-color: #c0c0c0;
+}
+
+/* Number Button styling */
+.button-number {
+
+}
+
+/* Operation Button styling */
+.button-operator {
+
+}
+
+/* Other Button styling */
+.button-other {
+
 }
