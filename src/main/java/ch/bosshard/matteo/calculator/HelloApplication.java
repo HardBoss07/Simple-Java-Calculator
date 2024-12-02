@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class HelloApplication extends Application {
     @Override
@@ -181,9 +182,12 @@ public class HelloApplication extends Application {
         VBox mainLayout = new VBox(20);
         mainLayout.getChildren().addAll(title, output, equationLabel, clearRow, firstRow, secondRow, thirdRow, fourthRow, equationLogDropdown);
 
+
+        System.out.println("Button classes: " + zeroBtn.getStyleClass());
+
         //Scene handling
         Scene scene = new Scene(mainLayout, 350, 600);
-        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ch/bosshard/matteo/calculator/style2.css")).toExternalForm());
         stage.setTitle("Simple Java Calculator");
         stage.setScene(scene);
         stage.show();
