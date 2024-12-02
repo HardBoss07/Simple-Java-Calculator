@@ -49,7 +49,7 @@ public class HelloApplication extends Application {
 
         //All buttonsVBox
         Button clearBtn = new Button("C");
-        Button deleteBtn = new Button("←");
+        Button deleteBtn = new Button("⌫");
         Button zeroBtn = new Button("0");
         Button oneBtn = new Button("1");
         Button twoBtn = new Button("2");
@@ -142,27 +142,17 @@ public class HelloApplication extends Application {
                     equationLabel.setText(calc.getCurrentEquation());
                 })
         );
-        operatorButtons.forEach((button, operator) ->
-                button.setOnAction(e -> {
-                    if (!calc.currentNumber.isEmpty()) {
-                        calc.allNumbers.add(calc.currentNumber);
-                        calc.currentNumber = "";
-                        calc.allOperations.add(operator);
-                    } else if (!calc.allOperations.isEmpty()) {
-                        calc.allOperations.set(calc.allOperations.size() - 1, operator);
-                    } else {
-                        calc.allOperations.add(operator);
-                    }
-                    equationLabel.setText(calc.getCurrentEquation());
-                })
-        );
 
         //Negate button
         negateBtn.setOnAction(e -> {
-            if (calc.currentNumber.charAt(0) == '-') {
-                calc.currentNumber = calc.currentNumber.substring(1);
+            if (calc.currentNumber.isEmpty()) {
+                calc.currentNumber += "-";
             } else {
-                calc.currentNumber = "-" + calc.currentNumber;
+                if (calc.currentNumber.charAt(0) == '-') {
+                    calc.currentNumber = calc.currentNumber.substring(1);
+                } else {
+                    calc.currentNumber = "-" + calc.currentNumber;
+                }
             }
             output.setText(calc.getCurrentNumber());
             equationLabel.setText(calc.getCurrentEquation());

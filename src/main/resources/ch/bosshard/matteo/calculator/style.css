@@ -151,9 +151,9 @@
     -fx-font-size: 18px;
     -fx-pref-width: 60px;
     -fx-pref-height: 60px;
-    -fx-background-color: #F7F7F7;
-    -fx-border-color: #DCDCDC;
-    -fx-border-width: 1px;
+    -fx-background-color: #F5FFC6;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
     -fx-border-radius: 4px;
     -fx-text-fill: #333333;
     -fx-cursor: hand;
@@ -166,52 +166,51 @@
 
 /* Operator Button Styling */
 .button.button-operator {
-    -fx-background-color: #6A2DBE;
-    -fx-border-color: #4C1A7C;
+    -fx-background-color: #AB87FF;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
     -fx-text-fill: #FFFFFF;
     -fx-border-radius: 4px;
 }
 
 .button.button-operator:hover {
-    -fx-background-color: #5E239D;
+    -fx-background-color: #9D75E6;
 }
 
 .button.button-operator:pressed {
-    -fx-background-color: #4A1E7D;
-    -fx-border-color: #3A145B;
+    -fx-background-color: #845BC7;
 }
 
 /* Number Button Styling */
 .button.button-number {
-    -fx-background-color: #FF327E;
-    -fx-border-color: #E50056;
-    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #F5FFC6;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-text-fill: #333333;
     -fx-border-radius: 4px;
 }
 
 .button.button-number:hover {
-    -fx-background-color: #F61067;
+    -fx-background-color: #E6F6B4;
 }
 
 .button.button-number:pressed {
-    -fx-background-color: #D70059;
-    -fx-border-color: #C2004D;
+    -fx-background-color: #CCD999;
 }
 
 /* Other Button Styling (Clear, Delete, etc.) */
 .button.button-other {
-    -fx-background-color: #00F0B5;
-    -fx-border-color: #00D8A4;
+    -fx-background-color: #B4E1FF;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
     -fx-text-fill: #FFFFFF;
-    -fx-border-width: 1px;
     -fx-border-radius: 4px;
 }
 
 .button.button-other:hover {
-    -fx-background-color: #00E6A0;
+    -fx-background-color: #9DD4F5;
 }
 
 .button.button-other:pressed {
-    -fx-background-color: #00B89B;
-    -fx-border-color: #009B86;
+    -fx-background-color: #7DB8D9;
 }
