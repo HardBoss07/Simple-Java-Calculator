@@ -134,9 +134,8 @@ public class HelloApplication extends Application {
 
                 })
         );
-
         subtractBtn.setOnAction(e -> {
-            if (calc.allNumbers.isEmpty()) {
+            if (calc.allNumbers.isEmpty() && calc.currentNumber.isEmpty()) {
                 calc.currentNumber += "-";
             }
             else {
