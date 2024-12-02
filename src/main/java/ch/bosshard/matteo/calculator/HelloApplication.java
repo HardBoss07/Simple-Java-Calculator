@@ -7,6 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -169,7 +171,39 @@ public class HelloApplication extends Application {
             output.setText(calc.getCurrentNumber());
         });
 
-        //Layout
+        // Theme Toggle Button (Top-right corner)
+        Image lightImage = new Image(getClass().getResource("/ch/bosshard/matteo/calculator/Icons/light-theme-icon.png").toExternalForm());
+        Image darkImage = new Image(getClass().getResource("/ch/bosshard/matteo/calculator/Icons/dark-theme-icon.png").toExternalForm());
+        ImageView lightImageView = new ImageView(lightImage);
+        ImageView darkImageView = new ImageView(darkImage);
+
+        double iconSize = 25;
+        lightImageView.setFitHeight(iconSize);
+        lightImageView.setFitWidth(iconSize);
+        darkImageView.setFitHeight(iconSize);
+        darkImageView.setFitWidth(iconSize);
+
+        Button themeToggleButton = new Button();
+        themeToggleButton.setGraphic(darkImageView);
+        themeToggleButton.setStyle("-fx-background-color: transparent; -fx-border-width: 0; -fx-font-size: 18px; -fx-cursor: hand;");
+        themeToggleButton.setOnAction(e -> {
+            String currentStyle = stage.getScene().getStylesheets().get(0);
+            if (currentStyle.endsWith("style-dark.css")) {
+                stage.getScene().getStylesheets().clear();
+                stage.getScene().getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ch/bosshard/matteo/calculator/style.css")).toExternalForm());
+                themeToggleButton.setGraphic(darkImageView);
+            } else {
+                stage.getScene().getStylesheets().clear();
+                stage.getScene().getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ch/bosshard/matteo/calculator/style-dark.css")).toExternalForm());
+                themeToggleButton.setGraphic(lightImageView);
+            }
+        });
+
+        // Layout for title and theme toggle button (horizontally aligned)
+        HBox titleAndToggle = new HBox(10, title, themeToggleButton);
+        titleAndToggle.setStyle("-fx-padding: 10px; -fx-alignment: center-right;");
+
+        // Layout for the calculator
         HBox firstRow = new HBox(10, sevenBtn, eightBtn, nineBtn, divideBtn);
         HBox secondRow = new HBox(10, fourBtn, fiveBtn, sixBtn, multiplyBtn);
         HBox thirdRow = new HBox(10, oneBtn, twoBtn, threeBtn, subtractBtn);
@@ -180,14 +214,11 @@ public class HelloApplication extends Application {
         clearRow.setSpacing(10);
 
         VBox mainLayout = new VBox(20);
-        mainLayout.getChildren().addAll(title, output, equationLabel, clearRow, firstRow, secondRow, thirdRow, fourthRow, equationLogDropdown);
-
-
-        System.out.println("Button classes: " + zeroBtn.getStyleClass());
+        mainLayout.getChildren().addAll(titleAndToggle, output, equationLabel, clearRow, firstRow, secondRow, thirdRow, fourthRow, equationLogDropdown);
 
         //Scene handling
         Scene scene = new Scene(mainLayout, 350, 600);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ch/bosshard/matteo/calculator/style2.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/ch/bosshard/matteo/calculator/style.css")).toExternalForm());
         stage.setTitle("Simple Java Calculator");
         stage.setScene(scene);
         stage.show();
