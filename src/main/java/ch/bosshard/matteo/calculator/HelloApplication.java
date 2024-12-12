@@ -1,5 +1,11 @@
 package ch.bosshard.matteo.calculator;
 
+/**
+ * HelloApplication.java
+ * @author Matteo Bosshard
+ * @version 12.12.2024
+ **/
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

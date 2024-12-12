@@ -1,5 +1,11 @@
 package ch.bosshard.matteo.calculator;
 
+/**
+ * Calculator.java
+ * @author Matteo Bosshard
+ * @version 12.12.2024
+ **/
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
